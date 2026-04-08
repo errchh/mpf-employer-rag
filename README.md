@@ -1,5 +1,7 @@
 # MPF Employer RAG - Agentic RAG with LangChain Deep Agents + Zvec + MCP
 
+An agentic RAG system designed to de-risk HR operations by ensuring strict compliance with Hong Kong’s Mandatory Provident Fund (MPF) employer obligations. 
+
 ![Jan.ai Integration](assets/jan.png)
 
 ![FastMCP](assets/fastmcp.png)
