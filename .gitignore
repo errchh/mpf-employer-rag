@@ -40,6 +40,7 @@ env/
 
 # Data
 data/
+models/
 *.zvec
 
 # Logs
@@ -53,3 +54,10 @@ data/
 # OS
 .DS_Store
 Thumbs.db
+
+# Project
+.agents/
+.beads/
+.claude/
+.kilocode/
+.ruff_cache/

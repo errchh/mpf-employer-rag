@@ -1,7 +1,0 @@
-{
-  "database": "dolt",
-  "backend": "dolt",
-  "dolt_mode": "embedded",
-  "dolt_database": "mpf_employer_rag",
-  "project_id": "9b459daa-767c-4adf-9508-0960caf6dd01"
-}
