@@ -25,7 +25,14 @@ def load_markdown_documents(path: Path) -> list[str]:
 
 def embed_documents(chunks: list[str]) -> list[dict]:
     """Embed document chunks."""
-    model = SentenceTransformer(settings.embedding_model)
+    model_path = settings.embedding_model_path
+    config_file = model_path / "config.json"
+    if model_path.exists() and config_file.exists():
+        model = SentenceTransformer(str(model_path))
+    else:
+        model = SentenceTransformer(settings.embedding_model)
+        model_path.mkdir(parents=True, exist_ok=True)
+        model.save(str(model_path))
     embeddings = model.encode(chunks, show_progress_bar=True)
 
     return [

@@ -1,6 +1,14 @@
-# MPF Employer RAG - Agentic RAG with DeepAgents + Zvec + MCP
+# MPF Employer RAG - Agentic RAG with LangChain Deep Agents + Zvec + MCP
+
+![Jan.ai Integration](assets/jan.png)
+
+![FastMCP](assets/fastmcp.png)
 
 ## Architecture
+
+The MPF Employer RAG is an agentic retrieval-augmented generation system designed to answer questions about Mandatory Provident Fund (MPF) employer obligations in Hong Kong. The system combines a reasoning agent with local vector storage and external API connectivity to provide accurate, context-aware responses.
+
+The system uses a layered architecture with three main components: an **Agent Layer** for reasoning and tool orchestration, a **Retrieval Layer** for semantic search via Zvec, and a **Data Layer** for document storage and management.
 
 ```
 External Frontend (OpenWebUI / Jan.ai)
@@ -9,7 +17,7 @@ External Frontend (OpenWebUI / Jan.ai)
     MCP Server (FastMCP)
          │
          ▼
-    Deep Agent (with planning, reflection)
+    Deep Agents (with planning, reflection)
          │
          ▼ (tool call)
     Zvec (hybrid search)
@@ -40,7 +48,7 @@ Copy `.env.example` to `.env` and fill in:
 ```
 OPENROUTER_API_KEY=your_api_key
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
-OPENROUTER_MODEL=anthropic/claude-3.5-sonnet
+OPENROUTER_MODEL=google/gemma-4-31b-it:free
 MCP_HOST=0.0.0.0
 MCP_PORT=8080
 SEARCH_TOP_K=5
@@ -110,7 +118,7 @@ See `config/settings.py` for:
 mpf-employer-rag/
 ├── mcp/zvec_server.py    # FastMCP server
 ├── agents/
-│   ├── rag_agent.py      # Deep Agent
+│   ├── rag_agent.py      # Deep Agents
 │   └── rag_tools.py      # RAG tools
 ├── rag/
 │   ├── index.py          # Document indexing

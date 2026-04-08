@@ -1,5 +1,6 @@
 from deepagents import create_deep_agent
 from langgraph.checkpoint.memory import MemorySaver
+from langchain_openai import ChatOpenAI
 
 from agents.rag_tools import create_rag_tools
 from config.settings import settings
@@ -40,10 +41,14 @@ def create_agent(checkpointer=None):
 
     tools = create_rag_tools()
 
-    return create_deep_agent(
+    llm = ChatOpenAI(
         model=settings.openrouter_model,
-        base_url="https://openrouter.ai/api/v1",
+        base_url=settings.openrouter_base_url,
         api_key=settings.openrouter_api_key or "",
+    )
+
+    return create_deep_agent(
+        model=llm,
         tools=tools,
         system_prompt=SYSTEM_PROMPT,
         checkpointer=checkpointer,

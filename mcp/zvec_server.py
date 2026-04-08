@@ -1,11 +1,10 @@
 from fastmcp import FastMCP
 from pydantic import Field
-from sentence_transformers import SentenceTransformer
 
 from config.settings import settings
-from rag import zvec_db
 
-mcp = FastMCP(" MPF Employer RAG")
+
+mcp = FastMCP("MPF Employer RAG")
 
 
 @mcp.tool()
@@ -13,18 +12,9 @@ def query_rag(
     query: str = Field(description="The user question about MPF obligations"),
 ) -> str:
     """Query the MPF knowledge base and get an answer."""
-    model = SentenceTransformer(settings.embedding_model)
-    query_embedding = model.encode([query])[0].tolist()
-    results = zvec_db.search(query_embedding, top_k=settings.search_top_k)
+    from agents.rag_tools import search_documents
 
-    if not results:
-        return "No relevant information found."
-
-    context = "\n\n".join(
-        [r["text"].replace("<br>", "\n").replace("</p>", "\n\n")[:800] for r in results]
-    )
-
-    return f"Context:\n{context}\n\nQuery: {query}"
+    return search_documents.invoke(query)
 
 
 @mcp.tool()

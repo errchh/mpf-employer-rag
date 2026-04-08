@@ -11,11 +11,14 @@ class Settings(BaseSettings):
     )
 
     embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    embedding_model_path: Path = project_root / "models" / "embeddings"
     embedding_dim: int = 384
+
+    hf_token: str | None = None
 
     openrouter_api_key: str | None = None
     openrouter_base_url: str = "https://openrouter.ai/api/v1"
-    openrouter_model: str = "anthropic/claude-3.5-sonnet"
+    openrouter_model: str = "google/gemma-4-31b-it:free"
 
     mcp_host: str = "0.0.0.0"
     mcp_port: int = 8080

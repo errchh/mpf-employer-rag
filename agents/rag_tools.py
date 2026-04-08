@@ -1,4 +1,5 @@
 from sentence_transformers import SentenceTransformer
+from pathlib import Path
 from pydantic import Field
 from langchain.tools import tool
 
@@ -7,14 +8,21 @@ from rag import zvec_db
 
 
 class EmbeddingModel:
-    def __init__(self, model_name: str = None):
+    def __init__(self, model_name: str = None, model_path: Path = None):
         self.model_name = model_name or settings.embedding_model
+        self.model_path = model_path or settings.embedding_model_path
         self._model = None
 
     @property
     def model(self):
         if self._model is None:
-            self._model = SentenceTransformer(self.model_name)
+            config_file = self.model_path / "config.json"
+            if self.model_path.exists() and config_file.exists():
+                self._model = SentenceTransformer(str(self.model_path))
+            else:
+                self._model = SentenceTransformer(self.model_name)
+                self.model_path.mkdir(parents=True, exist_ok=True)
+                self._model.save(str(self.model_path))
         return self._model
 
     def embed(self, texts: list[str]) -> list[list[float]]:
